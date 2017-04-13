@@ -1,57 +1,79 @@
 <!DOCTYPE html>
 <!-- saved from url=(0060)file:///C:/Users/sonir/Desktop/HomeWork/hangman/Hangman.html -->
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body>
-<audio autoplay><source src="assets/sound/backgroundmusic.mp3" type="audio/mpeg">
-</audio>
+<audio autoplay loop id="bmusic"><source src="assets/sound/backgroundmusic.mp3" type="audio/mpeg">
+</audio> 
 <!-- Heading image -->
 	<div  style="width: 100%;border-style: solid; border-color: gray; float: top;">
 	<img src="assets/images/topheader.jpg" width="100%" height="100px"></div>
 
 <!-- left image panel -->
-	<div style="width: 100%">
-		<div style="width: 49.5%;border-style: solid; border-color: gray; float: left;background-color: teal;">
+	<div  style="width: 100%">
+		<div id="img1" style="width: 49.5%;border-style: solid; border-color: gray; float: left;background-color: teal;">
 		<center>	<img src="assets/images/animated/hmlogo.gif" style="width:100%;" alt="image of theif"></center>
 <!-- Right Game Panel -->
 		</div>
 		<div style="width:50%;border-style: solid; border-color: gray; float:right; background-color: red; color:yellow;" >
-			<div id="myid" style="width: 99%;padding-left: 5px; padding-top: 15px; padding-bottom: 15px; "><center><h1>Hint: A fruit</h1></center></div> 
-			<div style="width: 99%; background-color: darkblue; color: white;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;">
-			<center>
-			<h2>Guess Magic Word?</h2> 
-			<input type="text" id="fname" onkeyup="myFunction(event)">
-			</center>
-
-<!-- Score Panel -->
+			<div id="myid" style="padding-left: 5px; padding-top: 15px; padding-bottom: 15px; "><center><h1>Hint: A fruit</h1></center>
+			</div> 
+			<div style=" background-color: darkblue; color: white;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;">
+				<center>
+				<h2>Guess Magic Word?</h2> 
+				<input type="text" id="fname" onkeyup="myFunction(event)">
+				</center>
 			</div>
+<!-- Score Panel -->
+			<div id="score1" style="background-color: orange; color: brown;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2>Score:</center></div>
 
-			<div id="score1" style="background-color: orange; color: brown;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2><br></h2></center></div>
+			<div id="loss1" style="background-color: blue; color: white;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2><br></h2></center></div>
 
-			<div id="loss1" style="background-color: blue; color: white;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2></h2><br></center></div>
+			<div id="try1" style="background-color: lightblue; color: brown;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2>Try:</h2></center></div>
 
-			<div id="try1" style="background-color: lightblue; color: brown;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2><br></h2></center></div>
+			<div id="exit1" style="background-color: teal; color: white;padding-left: 15px; padding-top: 15px; padding-bottom: 15px;">
+				
+			<!-- Exit Button -->		
+					<button style="color: white; background-color: red; size: 50px; font-size: 40px; " onclick="exitChk()"><img src="assets/images/exit.png" alt="exit" style="size: 50%;"/></button>&nbsp;
+			<!-- Start Button -->	
+					<button style="color: white; background-color: white; size: 50px; font-size: 40px;  " onclick='start()'><img src="assets/images/start.png" style="size: 50%;" alt="start"/></button>&nbsp;
+            <!-- No Music Button -->
+					<button style="color: white; background-color: white; size: 50px; font-size: 40px;  " onclick='turnoff()'><img src="assets/images/nomusic.png" style="size: 50%;" alt="Mute"/></button>					
 
-		    </div>
-	</div>
+				
+			 </div>
+	</div> 
 
 
 <!--Starting Script -->
 
 <script>
  // generating randome number between 0 and 5 it given outside the function to make it global
-  var rnd_no = Math.floor((Math.random() * 5));
+  var rnd_no = 0
+ 
   var scoreword = 0;
   var lets_try = 0;  
   var y=["APPLE","ORANGE","GRAPE","PEACH","GUAVA"];
-  var temp=y[rnd_no].length;
-  var tx ="Hint: A fruit with "+temp;
+  var temp=0;
+  var tx ="";
   var scorecard = 0;
-  document.getElementById("myid").innerHTML="<center><h1>"+tx+" Letters</h1></center>";
-  //console.log(document.tx);
+  randy();
+  //document.getElementById("myid").innerHTML="<center><h1>"+tx+" Letters</h1></center>";
+  
+function randy() {rnd_no=Math.floor((Math.random() * 5));
+	// body...
 
+						var temp=y[rnd_no].length;
+  						var tx ="Hint: A fruit with "+temp;
+						document.getElementById("myid").innerHTML="<center><h1>"+tx+" Letters</h1></center>";
+						var lets_try = 0;
+
+}
 
 function myFunction(event) {
+ 
 
+// Testing
 	console.log(event);
+	
 // storing input value
     var input_val1 = document.getElementById("fname");
 
@@ -79,11 +101,26 @@ function myFunction(event) {
     var str = input_val1.value ;
 
 document.getElementById("score1").innerHTML = "<center><h2>Score:"+scorecard+"</h2></center>";
+// Captureing Backspace and delete Key
 
-document.getElementById("try1").innerHTML = "<center><h2>Tries:"+lets_try+"</h2></center>";
+	document.getElementById('fname').addEventListener('keydown', function (event) {
+    if (event.keyCode == 8) {
+        console.log('BACKSPACE was pressed');
+
+        // Call event.preventDefault() to stop the character before the cursor
+      
+        event.preventDefault();
+    }
+    if (event.keyCode == 46) {
+        console.log('DELETE was pressed');
+
+   
+        event.preventDefault();
+    }
+});
 
  //Limit the length of the input
-     if (quiz_length <= lx-1)
+     if (quiz_length <= lx-1) 
      {
           	str = str.substring(0, str.length - 1);
         	document.getElementById("fname").value = str;
@@ -94,6 +131,7 @@ document.getElementById("try1").innerHTML = "<center><h2>Tries:"+lets_try+"</h2>
 	     {
 	     	scoreword=scoreword+1;
 	   //console.log(scoreword.value,quiz_length);
+	   document.getElementById("try1").innerHTML = "<center><h2>Tries:"+lets_try+"</h2></center>";
 
 					// image change
 
@@ -101,38 +139,48 @@ document.getElementById("try1").innerHTML = "<center><h2>Tries:"+lets_try+"</h2>
 					{
 			//	alert("You Win");
 			
-						scorecard = scorecard++;
+						scorecard = scorecard+1;
 document.getElementById("score1").innerHTML = "<center><h2>Score:"+scorecard+"</h2></center>";
 
-				 		 exitChk();
-				 		 scoreword = 0;
-						input_val1.value="";
+				 	//	 Image change 
 
+				 	imgchg('img4r.gif');
+				 		 scoreword = 0;
+				 		 lets_try =0;
+				 		 scorecard = 0;
+						input_val1.value="";
+						randy();
+						
 					}
 					
 					
 	     }
      else {
      	 lets_try=lets_try+1;
-	     	if (lets_try==4)
+	     	if (lets_try==5)
 		     	{
 	document.getElementById("loss1").innerHTML = "<center><h2>Magic Word:"+quiz_name+"</h2></center>";
 		     		lets_try=0;
 		     		scoreword=0;
-		     		alert(quiz_name);
-		    // image change
-		
-		     		alert("You Lost it");
-					document.getElementById("loss1").innerHTML = "                    ";
-		        	exitChk();
+		    		imgchg('img4w.gif');
+		    		randy();
+		  			
+		     	
 		     	}
 
 	     	else
 		     	{
-		     		
-		
 
 		//           image change
+					if (lets_try==1){
+						imgchg('img1w.gif');
+					}
+					if (lets_try==2){
+						imgchg('img2w.gif');
+					}
+					if (lets_try==3){
+						imgchg('img3w.gif');
+					}
 		
 					     
 		     		var str = input_val1.value ;
@@ -142,21 +190,18 @@ document.getElementById("score1").innerHTML = "<center><h2>Score:"+scorecard+"</
 		     	}
      }
 
-
-/*
-    console.log(input_val1.value);
-    console.log(xval);
-    console.log(lx);
-    console.log(quiz_length);
-    console.log(quiz_name);
-    console.log(comp_char);
-    console.log(quiz_letter);
-    console.log(str);
-    console.log(scoreword);
-    console.log(lets_try);
-*/
 }
+// function to change image
+// called from instance of image change
+function imgchg(imagename) {
+	//console.log(imagename.value);
+	document.getElementById('img1').innerHTML = '<img src =assets/images/'+imagename+' style="width:100%" alt="theif">';
+	// body...
+}
+
+
 // function to check exit or continue for the user
+// called by exit button
 function exitChk()
 		{
 			if(confirm("Exit Game?"))
@@ -171,11 +216,18 @@ function exitChk()
 			  					{  window.location.reload();
 			  					}
 		}
+// function to switch off music
+// called by music off buton
+			function turnoff(){
+					document.getElementById('bmusic').src=null;
+				}
 
+function start() {
+	 window.location.reload();
+	// body...
+}
 </script>
 
 
-<!-- <embed loop="true" src="assets/sound/backgroundmusic.mp3" hidden="true" type="audio/quicktime">-->
-	
-</embed>
+
 </body></html>
