@@ -5,7 +5,7 @@
 </audio> 
 <!-- Heading image -->
 	<div  style="width: 100%;border-style: solid; border-color: gray; float: top;">
-	<img src="assets/images/topheader.jpg" width="100%" height="100px"></div>
+	<img src="assets/images/topheader.jpg" width="100%" height="130px"></div>
 
 <!-- left image panel -->
 	<div  style="width: 100%">
@@ -23,13 +23,17 @@
 				</center>
 			</div>
 <!-- Score Panel -->
-			<div id="score1" style="background-color: orange; color: brown;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2>Score:</center></div>
+			<div style='background-color: black; color: brown;padding-left: 1px; padding-top: 1px; padding-bottom:1px;'>
+				<div id="score1" style="background-color: orange; color: brown;padding-left: 1px; padding-top: 10px; padding-bottom: 10px; width: 49.5%; float: left;"><center><h2>Wins:</center></h2></div>
+				<div id="losstry" style="background-color: orange; color: brown;padding-left: 1px; padding-top: 10px; padding-bottom: 10px; width: 49.5%; float: right;"><center><h2>Loss:</center></h2></div>
+			</div>
 
-			<div id="loss1" style="background-color: blue; color: white;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2><br></h2></center></div>
+			<div id="loss1" style="background-color: blue; color: white;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2><br><br><br><br></h2></center></div>
 
 			<div id="try1" style="background-color: lightblue; color: brown;padding-left: 5px; padding-top: 15px; padding-bottom: 15px;"><center><h2>Try:</h2></center></div>
 
 			<div id="exit1" style="background-color: teal; color: white;padding-left: 15px; padding-top: 15px; padding-bottom: 15px;">
+				<center>
 				
 			<!-- Exit Button -->		
 					<button style="color: white; background-color: red; size: 50px; font-size: 40px; " onclick="exitChk()"><img src="assets/images/exit.png" alt="exit" style="size: 50%;"/></button>&nbsp;
@@ -37,7 +41,7 @@
 					<button style="color: white; background-color: white; size: 50px; font-size: 40px;  " onclick='start()'><img src="assets/images/start.png" style="size: 50%;" alt="start"/></button>&nbsp;
             <!-- No Music Button -->
 					<button style="color: white; background-color: white; size: 50px; font-size: 40px;  " onclick='turnoff()'><img src="assets/images/nomusic.png" style="size: 50%;" alt="Mute"/></button>					
-
+				</center>
 				
 			 </div>
 	</div> 
@@ -48,28 +52,27 @@
 <script>
  // generating randome number between 0 and 5 it given outside the function to make it global
   var rnd_no = 0
- 
   var scoreword = 0;
   var lets_try = 0;  
   var y=["APPLE","ORANGE","GRAPE","PEACH","GUAVA"];
   var temp=0;
   var tx ="";
   var scorecard = 0;
+  var losscard = 0;
   randy();
   //document.getElementById("myid").innerHTML="<center><h1>"+tx+" Letters</h1></center>";
   
 function randy() {rnd_no=Math.floor((Math.random() * 5));
 	// body...
 
-						var temp=y[rnd_no].length;
+						temp=y[rnd_no].length;
   						var tx ="Hint: A fruit with "+temp;
 						document.getElementById("myid").innerHTML="<center><h1>"+tx+" Letters</h1></center>";
-						var lets_try = 0;
+						lets_try = 0;
 
 }
 
 function myFunction(event) {
- 
 
 // Testing
 	console.log(event);
@@ -100,7 +103,7 @@ function myFunction(event) {
     var quiz_letter=quiz_name.charAt(lx-1);
     var str = input_val1.value ;
 
-document.getElementById("score1").innerHTML = "<center><h2>Score:"+scorecard+"</h2></center>";
+document.getElementById("score1").innerHTML = "<center><h2>Wins:"+scorecard+"</h2></center>";
 // Captureing Backspace and delete Key
 
 	document.getElementById('fname').addEventListener('keydown', function (event) {
@@ -140,49 +143,56 @@ document.getElementById("score1").innerHTML = "<center><h2>Score:"+scorecard+"</
 			//	alert("You Win");
 			
 						scorecard = scorecard+1;
-document.getElementById("score1").innerHTML = "<center><h2>Score:"+scorecard+"</h2></center>";
-
+						document.getElementById("score1").innerHTML = "<center><h2>Wins:"+scorecard+"</h2></center>";
+						lets_try=0;
 				 	//	 Image change 
 
-				 	imgchg('img4r.gif');
+				 		imgchg('img4r.gif');
 				 		 scoreword = 0;
 				 		 lets_try =0;
-				 		 scorecard = 0;
+				 	//	 scorecard = 0;
 						input_val1.value="";
 						randy();
 						
 					}
-					
-					
+						
 	     }
      else {
-     	 lets_try=lets_try+1;
+     	// lets_try=lets_try+1;
 	     	if (lets_try==5)
 		     	{
-	document.getElementById("loss1").innerHTML = "<center><h2>Magic Word:"+quiz_name+"</h2></center>";
+					document.getElementById("loss1").innerHTML = "<center><h2>Magic Word:"+quiz_name+"</h2></center><br><br>";
 		     		lets_try=0;
 		     		scoreword=0;
 		    		imgchg('img4w.gif');
+		    		input_val1.value="";
+		    		losscard=losscard+1;
 		    		randy();
-		  			
+					document.getElementById("losstry").innerHTML = "<center><h2>Loss:"+losscard+"</h2></center>";
 		     	
 		     	}
 
 	     	else
 		     	{
 
-		//           image change
+		//           image change on wrong guess
 					if (lets_try==1){
 						imgchg('img1w.gif');
+						
 					}
 					if (lets_try==2){
 						imgchg('img2w.gif');
+				
 					}
 					if (lets_try==3){
 						imgchg('img3w.gif');
+			
 					}
+
+					// Incrementing tries
+					lets_try=lets_try+1;
 		
-					     
+				document.getElementById("try1").innerHTML = "<center><h2>Tries:"+lets_try+"</h2></center>";     
 		     		var str = input_val1.value ;
 		     		 str = str.substring(0, str.length - 1);
 		        	document.getElementById("fname").value = str;
